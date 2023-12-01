@@ -14,10 +14,6 @@ import (
 // EmailProvider defines the types of email providers.
 type EmailProvider int
 
-const (
-	Breve EmailProvider = iota
-	Yandex
-)
 
 // EmailConfig stores the configuration for an email provider.
 type EmailConfig struct {
