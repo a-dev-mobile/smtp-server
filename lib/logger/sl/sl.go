@@ -1,7 +1,7 @@
 package sl
 
 import (
-	"github.com/a-dev-mobile/smtp-server/internal/environment"
+
 
 	"golang.org/x/exp/slog"
 
@@ -15,9 +15,8 @@ const (
 	LevelWarn  = "warn"
 	LevelError = "error"
 )
-const LogFilePath = "/app/logs/smtp-server.log"
 
-func SetupLogger(env environment.Environment, logLevel string, logFilePath string) *slog.Logger {
+func SetupLogger(logLevel string, logFilePath string) *slog.Logger {
 	var logger *slog.Logger
 	level := parseLogLevel(logLevel)
 
@@ -32,9 +31,7 @@ func SetupLogger(env environment.Environment, logLevel string, logFilePath strin
 	} else {
 		// Использование стандартного вывода, если путь к файлу не задан
 		logger = slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: level}))
-		if env != environment.Dev {
-			logger.Warn("Unknown environment: %s, using default logger settings", env)
-		}
+
 	}
 
 	return logger

@@ -11,7 +11,7 @@ import (
 	pb "github.com/a-dev-mobile/smtp-server/proto"
 
 	"github.com/a-dev-mobile/smtp-server/internal/config"
-	"github.com/a-dev-mobile/smtp-server/internal/environment"
+
 
 	"golang.org/x/exp/slog"
 	"google.golang.org/grpc"
@@ -22,10 +22,10 @@ import (
 
 
 func main() {
-	appEnv, cfg, lg := initializeApp()
+	 cfg, lg := initializeApp()
 
-	lg.Info("init SMTPServer", "env", appEnv)
-	lg.Info("Loaded config", "config_json", cfg)
+	lg.Info("init SMTPServer", "config_json", cfg)
+
 
 	var opts []grpc.ServerOption
 
@@ -55,26 +55,20 @@ func main() {
 // initializeApp sets up the application environment, configuration, and logger.
 // It determines the application's running environment, loads the appropriate configuration,
 // and initializes the logging system.
-func initializeApp() (environment.Environment, *config.Config, *slog.Logger) {
-	appEnv := getAppEnvOrFail()
-	cfg, lg := getConfigOrFail(environment.Environment(appEnv))
-	return appEnv, cfg, lg
+func initializeApp() ( *config.Config, *slog.Logger) {
+
+	cfg, lg := getConfigOrFail()
+	return  cfg, lg
 }
 
-func getAppEnvOrFail() environment.Environment {
-	appEnv := os.Getenv("APP_ENV")
-	if appEnv == "" {
-		log.Fatalf("APP_ENV is not set")
-	}
-	return environment.Environment(appEnv)
-}
 
-func getConfigOrFail(appEnv environment.Environment) (*config.Config, *slog.Logger) {
-	cfg, err := config.GetConfig(appEnv)
+
+func getConfigOrFail() (*config.Config, *slog.Logger) {
+	cfg, err := config.GetConfig()
 	if err != nil {
 		log.Fatalf("Error loading config: %s", err)
 	}
-	lg := sl.SetupLogger(appEnv, cfg.Logging.Level, cfg.Logging.FileOutput.FilePath)
+	lg := sl.SetupLogger(cfg.Logging.Level, cfg.Logging.FileOutput.FilePath)
 
 	return cfg, lg
 }

@@ -27,4 +27,3 @@ jobs:
         push: true
         tags: |
           wayofdt/smtp-server:latest
-          wayofdt/smtp-server:${{ github.sha }}
