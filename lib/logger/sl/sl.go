@@ -20,16 +20,16 @@ func SetupLogger(logLevel string, logFilePath string) *slog.Logger {
 	var logger *slog.Logger
 	level := parseLogLevel(logLevel)
 
-	// Проверка, задан ли путь к файлу для логов
+// Check if the path to the log file is set
 	if logFilePath != "" {
-		// Попытка открыть файл журнала
+// Attempt to open log file
 		logFile, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 		if err != nil {
 			log.Fatalf("Failed to open log file: %v", err)
 		}
 		logger = slog.New(slog.NewJSONHandler(logFile, &slog.HandlerOptions{Level: level}))
 	} else {
-		// Использование стандартного вывода, если путь к файлу не задан
+		// Use standard output if file path is not specified
 		logger = slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: level}))
 
 	}

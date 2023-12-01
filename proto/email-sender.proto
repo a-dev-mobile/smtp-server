@@ -1,26 +1,26 @@
 syntax = "proto3";
 
 package proto;
-// Указывает пакет Go, куда будет генерироваться код протокольного буфера.
-option go_package = "github.com/a-dev-mobile/wayofdt-projects/smtp-server/proto";
+// Specifies the Go package where the protocol buffer code will be generated.
+option go_package = "github.com/a-dev-mobile/smtp-server/proto";
 
-// EmailSenderApi определяет сервис с RPC методом для отправки электронной почты.
+// EmailSenderApi defines a service with an RPC method for sending email.
 service EmailSenderApi {
-  // SendEmail - RPC метод для отправки электронной почты.
+  //SendEmail - RPC method for sending email.
   rpc SendEmail (EmailSenderRequest) returns (EmailSenderResponse);
 }
 
-// EmailSenderRequest определяет структуру запроса для отправки электронной почты.
+//EmailSenderRequest defines the request structure for sending email.
 message EmailSenderRequest {
-  string recipient_email = 1; // Электронный адрес получателя.
-  string subject = 2;         // Тема электронного письма.
-  string from_name = 3;       // Отображаемое имя отправителя.
-  string from_email = 4;       // Отображаемое email отправителя.
-  string body = 5;    // Тело сообщения.
+  string recipient_email = 1; // Recipient's email address.
+  string subject = 2;         // Subject of the email.
+  string from_name = 3;       // Display name of the sender.
+  string from_email = 4;      // Displayed email of the sender.
+  string body = 5;            // Message body.
 }
 
-// EmailSenderResponse определяет структуру ответа после попытки отправить электронное письмо.
+//EmailSenderResponse defines the structure of the response after an attempt to send an email.
 message EmailSenderResponse {
-  bool success = 1; // Указывает, была ли операция отправки успешной.
-  string message = 2; // Сообщение об ошибке или статус отправки.
+  bool success = 1; // Indicates whether the send operation was successful.
+  string message = 2;// Error message or submission status.
 }

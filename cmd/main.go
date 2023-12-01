@@ -22,7 +22,7 @@ import (
 
 
 func main() {
-	 cfg, lg := initializeApp()
+	cfg, lg := getConfigOrFail()
 
 	lg.Info("init SMTPServer", "config_json", cfg)
 
@@ -32,7 +32,7 @@ func main() {
 	if cfg.GRPCServer.MaxConcurrentStreams > 0 {
 		opts = append(opts, grpc.MaxConcurrentStreams(uint32(cfg.GRPCServer.MaxConcurrentStreams)))
 	}
-	// Инициализация и запуск gRPC сервера
+// Initialize and start the gRPC server
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.GRPCServer.Port))
 	if err != nil {
 		lg.Error("Failed to listen:", sl.Err(err))
@@ -41,7 +41,7 @@ func main() {
 
 	grpcServer := grpc.NewServer(opts...)
 
-	// Регистрация сервисов
+	// Register services
 	sendServiceServer := send.NewServiceServer(cfg, lg)
 	pb.RegisterEmailSenderApiServer(grpcServer, sendServiceServer)
 
@@ -52,14 +52,6 @@ func main() {
 	}
 }
 
-// initializeApp sets up the application environment, configuration, and logger.
-// It determines the application's running environment, loads the appropriate configuration,
-// and initializes the logging system.
-func initializeApp() ( *config.Config, *slog.Logger) {
-
-	cfg, lg := getConfigOrFail()
-	return  cfg, lg
-}
 
 
 

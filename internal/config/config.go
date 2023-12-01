@@ -4,14 +4,13 @@ import (
 	"errors"
 	"fmt"
 
-
 	"os"
 	"path/filepath"
 
 	"gopkg.in/yaml.v3"
 )
 
-// Config определяет структуру конфигурации.
+// Config defines the configuration structure.
 type Config struct {
 	Environment   string               `yaml:"environment"`
 	Logging       LoggingConfig        `yaml:"logging"`
@@ -19,7 +18,7 @@ type Config struct {
 	GRPCServer    GRPCServerConfig     `yaml:"grpcServer"`
 }
 
-// SMTPProviderConfig определяет настройки для каждого поставщика SMTP.
+// SMTPProviderConfig defines settings for each SMTP provider.
 type SMTPProviderConfig struct {
 	Name      string `yaml:"name"`
 	SMTPHost  string `yaml:"smtpHost"`
@@ -29,28 +28,26 @@ type SMTPProviderConfig struct {
 	FromEmail string `yaml:"fromEmail"`
 }
 
-// LoggingConfig определяет настройки логирования.
+// LoggingConfig defines logging settings.
 type LoggingConfig struct {
 	Level      string           `yaml:"level"`
 	FileOutput FileOutputConfig `yaml:"fileOutput"`
 }
 
-// FileOutputConfig определяет настройки вывода логов в файл.
+// FileOutputConfig defines settings for outputting logs to a file.
 type FileOutputConfig struct {
 	FilePath string `yaml:"filePath"`
 }
 
-// GRPCServerConfig определяет настройки gRPC сервера.
+// GRPCServerConfig defines the gRPC server settings.
 type GRPCServerConfig struct {
 	Port                 string `yaml:"port"`
 	MaxConcurrentStreams int    `yaml:"maxConcurrentStreams"`
 }
 
-// GetConfig загружает конфигурацию из файла в зависимости от окружения.
+// GetConfig loads configuration from file
 func GetConfig() (*Config, error) {
 	configPath := "../config"
-
-
 
 	configFile := filepath.Join(configPath, "config.yaml")
 
@@ -61,7 +58,7 @@ func GetConfig() (*Config, error) {
 	return loadConfig(configFile)
 }
 
-// loadConfig читает и декодирует YAML файл конфигурации.
+// loadConfig reads and decodes the YAML configuration file.
 func loadConfig(file string) (*Config, error) {
 	configFile, err := os.ReadFile(file)
 	if err != nil {
