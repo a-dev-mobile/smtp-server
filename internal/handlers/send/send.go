@@ -26,7 +26,7 @@ func (s *SendServiceServer) SendEmail(ctx context.Context, req *pb.EmailSenderRe
 	s.Logger.Info("SendEmail called", "recipient", req.GetRecipientEmail())
 
 	if !utils.ValidateEmail(req.GetRecipientEmail()) {
-		return s.handleError("Check the email format", req.GetRecipientEmail())
+		return s.handleError("Invalid email format", req.GetRecipientEmail())
 	}
 
 	emailConfigs := utils.NewEmailConfigs(s.Config.SMTPProviders, s.Logger)
