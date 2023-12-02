@@ -8,10 +8,6 @@ import (
 	"golang.org/x/exp/slog"
 )
 
-const (
-	invalidEmailMsg = "Invalid email format"
-	emailSentMsg    = "The email was successfully delivered"
-)
 
 type SendServiceServer struct {
 	pb.UnimplementedEmailSenderApiServer
@@ -30,7 +26,7 @@ func (s *SendServiceServer) SendEmail(ctx context.Context, req *pb.EmailSenderRe
 	s.Logger.Info("SendEmail called", "recipient", req.GetRecipientEmail())
 
 	if !utils.ValidateEmail(req.GetRecipientEmail()) {
-		return s.handleError(invalidEmailMsg, req.GetRecipientEmail())
+		return s.handleError("Check the email format", req.GetRecipientEmail())
 	}
 
 	emailConfigs := utils.NewEmailConfigs(s.Config.SMTPProviders, s.Logger)
@@ -40,7 +36,7 @@ func (s *SendServiceServer) SendEmail(ctx context.Context, req *pb.EmailSenderRe
 	}
 
 	s.Logger.Info("Email sent successfully", "recipient", req.GetRecipientEmail())
-	return &pb.EmailSenderResponse{Success: true, Message: emailSentMsg}, nil
+	return &pb.EmailSenderResponse{Success: true, Message: "The email was successfully delivered"}, nil
 }
 
 func (s *SendServiceServer) handleError(msg, email string) (*pb.EmailSenderResponse, error) {
