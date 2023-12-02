@@ -2,7 +2,9 @@ package send
 
 import (
 	"context"
-	"github.com/a-dev-mobile/smtp-server/internal/config"
+
+
+	"github.com/a-dev-mobile/smtp-server/internal/models"
 	"github.com/a-dev-mobile/smtp-server/internal/utils"
 	pb "github.com/a-dev-mobile/smtp-server/proto"
 	"golang.org/x/exp/slog"
@@ -11,11 +13,11 @@ import (
 
 type SendServiceServer struct {
 	pb.UnimplementedEmailSenderApiServer
-	Config *config.Config
+	Config *models.Config
 	Logger *slog.Logger
 }
 
-func NewServiceServer(cfg *config.Config, lg *slog.Logger) *SendServiceServer {
+func NewServiceServer(cfg *models.Config, lg *slog.Logger) *SendServiceServer {
 	return &SendServiceServer{
 		Config: cfg,
 		Logger: lg,

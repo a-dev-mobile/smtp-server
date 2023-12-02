@@ -4,19 +4,21 @@ import (
 	"fmt"
 
 	"github.com/a-dev-mobile/smtp-server/internal/handlers/send"
+	"github.com/a-dev-mobile/smtp-server/internal/models"
 	"log"
 	"net"
 	"os"
-
+	"google.golang.org/grpc"
 	pb "github.com/a-dev-mobile/smtp-server/proto"
 
-	"github.com/a-dev-mobile/smtp-server/internal/config"
+
 
 
 	"golang.org/x/exp/slog"
-	"google.golang.org/grpc"
 
-	"github.com/a-dev-mobile/smtp-server/lib/logger/sl"
+
+	"github.com/a-dev-mobile/common-lib/logging"
+	"github.com/a-dev-mobile/common-lib/config"
 )
 
 
@@ -35,7 +37,7 @@ func main() {
 // Initialize and start the gRPC server
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.GRPCServer.Port))
 	if err != nil {
-		lg.Error("Failed to listen:", sl.Err(err))
+		lg.Error("Failed to listen:", logging.Err(err))
 		os.Exit(1)
 	}
 
@@ -47,7 +49,7 @@ func main() {
 
 	lg.Info("gRPC server starting", "port", cfg.GRPCServer.Port)
 	if err := grpcServer.Serve(lis); err != nil {
-		lg.Error("Failed to serve:", sl.Err(err))
+		lg.Error("Failed to serve:", logging.Err(err))
 		os.Exit(1)
 	}
 }
@@ -55,12 +57,15 @@ func main() {
 
 
 
-func getConfigOrFail() (*config.Config, *slog.Logger) {
-	cfg, err := config.GetConfig()
+func getConfigOrFail() (*models.Config, *slog.Logger) {
+	var cfg *models.Config
+    var err error
+
+	cfg, err = config.GetConfig[models.Config]("../config","config.yaml")
 	if err != nil {
 		log.Fatalf("Error loading config: %s", err)
 	}
-	lg := sl.SetupLogger(cfg.Logging.Level, cfg.Logging.FileOutput.FilePath)
+	lg := logging.SetupLogger(cfg.Logging.Level, cfg.Logging.FileOutput.FilePath)
 
 	return cfg, lg
 }

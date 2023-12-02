@@ -5,9 +5,10 @@ import (
 	"encoding/base64"
 	"fmt"
 	"net/smtp"
-	"github.com/a-dev-mobile/smtp-server/internal/config"
+
 	"strings"
 
+	"github.com/a-dev-mobile/smtp-server/internal/models"
 	"golang.org/x/exp/slog"
 )
 
@@ -27,7 +28,7 @@ type EmailConfig struct {
 }
 
 // NewEmailConfigs creates a slice of EmailConfig from a slice of SMTPProviderConfig.
-func NewEmailConfigs(smtpProviders []config.SMTPProviderConfig, lg *slog.Logger) []*EmailConfig {
+func NewEmailConfigs(smtpProviders []models.SMTPProviderConfig, lg *slog.Logger) []*EmailConfig {
 	var emailConfigs []*EmailConfig
 	for _, provider := range smtpProviders {
 		emailConfigs = append(emailConfigs, &EmailConfig{
