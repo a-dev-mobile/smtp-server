@@ -24,7 +24,7 @@ import (
 
 
 func main() {
-	cfg, lg := getConfigOrFail()
+	cfg, lg := getConfigAndLogOrFail()
 
 	lg.Info("init SMTPServer", "config_json", cfg)
 
@@ -57,7 +57,7 @@ func main() {
 
 
 
-func getConfigOrFail() (*models.Config, *slog.Logger) {
+func getConfigAndLogOrFail() (*models.Config, *slog.Logger) {
 	var cfg *models.Config
     var err error
 

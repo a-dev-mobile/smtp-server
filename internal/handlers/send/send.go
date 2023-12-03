@@ -8,6 +8,8 @@ import (
 	"github.com/a-dev-mobile/smtp-server/internal/utils"
 	pb "github.com/a-dev-mobile/smtp-server/proto"
 	"golang.org/x/exp/slog"
+
+	"github.com/a-dev-mobile/common-lib/validation"
 )
 
 
@@ -27,7 +29,7 @@ func NewServiceServer(cfg *models.Config, lg *slog.Logger) *SendServiceServer {
 func (s *SendServiceServer) SendEmail(ctx context.Context, req *pb.EmailSenderRequest) (*pb.EmailSenderResponse, error) {
 	s.Logger.Info("SendEmail called", "recipient", req.GetRecipientEmail())
 
-	if !utils.ValidateEmail(req.GetRecipientEmail()) {
+	if !validation.ValidateEmail(req.GetRecipientEmail()) {
 		return s.handleError("Invalid email format", req.GetRecipientEmail())
 	}
 
