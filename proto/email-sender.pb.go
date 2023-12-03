@@ -20,17 +20,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// EmailSenderRequest определяет структуру запроса для отправки электронной почты.
+// EmailSenderRequest defines the request structure for sending email.
 type EmailSenderRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	RecipientEmail string `protobuf:"bytes,1,opt,name=recipient_email,json=recipientEmail,proto3" json:"recipient_email,omitempty"` // Электронный адрес получателя.
-	Subject        string `protobuf:"bytes,2,opt,name=subject,proto3" json:"subject,omitempty"`                                     // Тема электронного письма.
-	FromName       string `protobuf:"bytes,3,opt,name=from_name,json=fromName,proto3" json:"from_name,omitempty"`                   // Отображаемое имя отправителя.
-	FromEmail      string `protobuf:"bytes,4,opt,name=from_email,json=fromEmail,proto3" json:"from_email,omitempty"`                // Отображаемое email отправителя.
-	Body           string `protobuf:"bytes,5,opt,name=body,proto3" json:"body,omitempty"`                                           // Тело сообщения.
+	RecipientEmail string `protobuf:"bytes,1,opt,name=recipient_email,json=recipientEmail,proto3" json:"recipient_email,omitempty"` // Recipient's email address.
+	Subject        string `protobuf:"bytes,2,opt,name=subject,proto3" json:"subject,omitempty"`                                     // Subject of the email.
+	FromName       string `protobuf:"bytes,3,opt,name=from_name,json=fromName,proto3" json:"from_name,omitempty"`                   // Display name of the sender.
+	FromEmail      string `protobuf:"bytes,4,opt,name=from_email,json=fromEmail,proto3" json:"from_email,omitempty"`                // Displayed email of the sender.
+	Body           string `protobuf:"bytes,5,opt,name=body,proto3" json:"body,omitempty"`                                           // Message body.
 }
 
 func (x *EmailSenderRequest) Reset() {
@@ -100,14 +100,14 @@ func (x *EmailSenderRequest) GetBody() string {
 	return ""
 }
 
-// EmailSenderResponse определяет структуру ответа после попытки отправить электронное письмо.
+// EmailSenderResponse defines the structure of the response after an attempt to send an email.
 type EmailSenderResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Success bool   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // Указывает, была ли операция отправки успешной.
-	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // Сообщение об ошибке или статус отправки.
+	Success bool   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"` // Indicates whether the send operation was successful.
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`  // Error message or submission status.
 }
 
 func (x *EmailSenderResponse) Reset() {
@@ -181,12 +181,11 @@ var file_proto_email_sender_proto_rawDesc = []byte{
 	0x45, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x19, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x45, 0x6d,
 	0x61, 0x69, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x1a, 0x1a, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x53, 0x65,
-	0x6e, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x3c, 0x5a, 0x3a,
+	0x6e, 0x64, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x2b, 0x5a, 0x29,
 	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x61, 0x2d, 0x64, 0x65, 0x76,
-	0x2d, 0x6d, 0x6f, 0x62, 0x69, 0x6c, 0x65, 0x2f, 0x77, 0x61, 0x79, 0x6f, 0x66, 0x64, 0x74, 0x2d,
-	0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x2f, 0x73, 0x6d, 0x74, 0x70, 0x2d, 0x73, 0x65,
-	0x72, 0x76, 0x65, 0x72, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x2d, 0x6d, 0x6f, 0x62, 0x69, 0x6c, 0x65, 0x2f, 0x73, 0x6d, 0x74, 0x70, 0x2d, 0x73, 0x65, 0x72,
+	0x76, 0x65, 0x72, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (

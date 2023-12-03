@@ -5,20 +5,21 @@ import (
 
 	"github.com/a-dev-mobile/smtp-server/internal/handlers/send"
 	"github.com/a-dev-mobile/smtp-server/internal/models"
+	"github.com/a-dev-mobile/smtp-server/internal/config"
+	"github.com/a-dev-mobile/smtp-server/internal/logging"
 	"log"
 	"net"
 	"os"
 	"google.golang.org/grpc"
 	pb "github.com/a-dev-mobile/smtp-server/proto"
-
+	
 
 
 
 	"golang.org/x/exp/slog"
 
 
-	"github.com/a-dev-mobile/common-lib/logging"
-	"github.com/a-dev-mobile/common-lib/config"
+
 )
 
 

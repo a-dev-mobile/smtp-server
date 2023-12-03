@@ -26,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EmailSenderApiClient interface {
-	// SendEmail - RPC метод для отправки электронной почты.
+	// SendEmail - RPC method for sending email.
 	SendEmail(ctx context.Context, in *EmailSenderRequest, opts ...grpc.CallOption) (*EmailSenderResponse, error)
 }
 
@@ -51,7 +51,7 @@ func (c *emailSenderApiClient) SendEmail(ctx context.Context, in *EmailSenderReq
 // All implementations must embed UnimplementedEmailSenderApiServer
 // for forward compatibility
 type EmailSenderApiServer interface {
-	// SendEmail - RPC метод для отправки электронной почты.
+	// SendEmail - RPC method for sending email.
 	SendEmail(context.Context, *EmailSenderRequest) (*EmailSenderResponse, error)
 	mustEmbedUnimplementedEmailSenderApiServer()
 }
