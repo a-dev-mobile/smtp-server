@@ -4,7 +4,6 @@ package models
 
 // Config defines the configuration structure.
 type Config struct {
-	Environment   string               `yaml:"environment"`
 	Logging       LoggingConfig        `yaml:"logging"`
 	SMTPProviders []SMTPProviderConfig `yaml:"smtpProviders"`
 	GRPCServer    GRPCServerConfig     `yaml:"grpcServer"`

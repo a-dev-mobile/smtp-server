@@ -3,31 +3,32 @@ package main
 import (
 	"fmt"
 
-	"github.com/a-dev-mobile/smtp-server/internal/handlers/send"
-	"github.com/a-dev-mobile/smtp-server/internal/models"
-	"github.com/a-dev-mobile/smtp-server/internal/config"
-	"github.com/a-dev-mobile/smtp-server/internal/logging"
 	"log"
 	"net"
 	"os"
-	"google.golang.org/grpc"
+
+	"github.com/a-dev-mobile/smtp-server/internal/config"
+	"github.com/a-dev-mobile/smtp-server/internal/environment"
+	"github.com/a-dev-mobile/smtp-server/internal/handlers/send"
+	"github.com/a-dev-mobile/smtp-server/internal/logging"
+	"github.com/a-dev-mobile/smtp-server/internal/models"
 	pb "github.com/a-dev-mobile/smtp-server/proto"
-	
-
-
+	"google.golang.org/grpc"
 
 	"golang.org/x/exp/slog"
-
-
-
 )
 
 
 
 func main() {
+	appEnv := getAppEnvOrFail()
+
+
+
 	cfg, lg := getConfigAndLogOrFail()
 
-	lg.Info("init SMTPServer", "config_json", cfg)
+	lg.Info("Environment used", ".env", appEnv)
+	lg.Debug("init SMTPServer", "config_json", cfg)
 
 
 	var opts []grpc.ServerOption
@@ -55,7 +56,13 @@ func main() {
 	}
 }
 
-
+func getAppEnvOrFail() environment.Environment {
+	appEnv := os.Getenv("APP_ENV")
+	if appEnv == "" {
+		log.Fatalf("APP_ENV is not set")
+	}
+	return environment.Environment(appEnv)
+}
 
 
 func getConfigAndLogOrFail() (*models.Config, *slog.Logger) {
